@@ -1,0 +1,88 @@
+
+* {
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    margin: 0;
+}
+
+img {
+    image-rendering: pixelated;
+    object-fit: contain;
+}
+
+img.mirro {
+    transform: rotateY(180deg);
+}
+
+.map-container {
+    width: fit-content; height: fit-content;
+    min-width: 100vw; min-height: 100vh;
+
+    display: grid;
+    justify-items: center;
+    align-items: center;
+}
+
+.map {
+    position: relative;
+    /* width: 960px; height: 540px;   */
+    /* width: 1280px; height: 720px; */
+    /* width: 1920px; height: 1080px; */
+
+    /* width: 1535px; height: 864px; */
+    /* width: 1228px; height: 691px; */
+    width: calc(1535px / 1.5); height: calc(864px / 1.5);  
+    overflow: hidden;
+}
+
+.aim {
+    position: absolute;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 60%;
+}
+
+.aim.delete > img {
+    visibility: hidden;
+}
+
+.item {
+    position: absolute;
+}
+
+.tool-container {
+    position: fixed;
+    top: 0; bottom: 0; left: 1vh;
+
+    margin: auto;
+    padding: 0.7vh;
+
+    /* width: fit-content; height: 75vh; */
+    width: fit-content; height: 75vh;
+    min-width: 1vh;
+    
+    display: grid;
+    grid-gap: 0.7vh;
+    justify-content: center;
+    align-content: start;
+
+    overflow: scroll;
+}
+
+.icon {
+    padding: 0.5vh;
+    width: 6vh; height: 6vh;
+    z-index: 0;
+}
+
+.upload {
+    display: none;
+}
