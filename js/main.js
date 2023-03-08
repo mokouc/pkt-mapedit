@@ -2,32 +2,30 @@
 var uw = 20 / 2
 var uh = 10 / 2
 
-document.onkeydown = function(e) {
-    switch(e.key) {
-        case 'd': $('.aim').addClass('delete'); break
-        case 's': $('.aim > img').addClass('mirro'); break
-    }
-}
-
-document.onkeyup = function(e) {
-    switch(e.key) {
-        case 'd': $('.aim').removeClass('delete'); break
-        case 's': $('.aim > img').removeClass('mirro'); break
-    }
-}
-
-document.addEventListener('click', function(e) {
-    if($('.aim').is('.delete')) { 
-        e.stopPropagation()
-        if($(e.target).is('.item, .icon')) {
-            $(e.target).remove()
+$(document).ready(function() {
+    
+    document.onkeydown = function(e) {
+        switch(e.key) {
+            case 'd': $('.aim').addClass('delete'); break
+            case 's': $('.aim > img').addClass('mirro'); break
         }
     }
-}, true)
-
-$(document).ready(function() {
-
-
+    
+    document.onkeyup = function(e) {
+        switch(e.key) {
+            case 'd': $('.aim').removeClass('delete'); break
+            case 's': $('.aim > img').removeClass('mirro'); break
+        }
+    }
+    
+    document.addEventListener('click', function(e) {
+        if($('.aim').is('.delete')) { 
+            e.stopPropagation()
+            if($(e.target).is('.item, .icon')) {
+                $(e.target).remove()
+            }
+        }
+    }, true)
 
     $('.map-container').mouseout(function(e) {
         $('.aim').css({visibility: 'hidden'})

@@ -5,6 +5,7 @@
 
 .map {
     border-radius: 1.5vh;
+    box-sizing: border-box;
     border: 0.5vh solid rgb(255, 179, 49);
     background-color: rgb(255, 255, 255);
 }
