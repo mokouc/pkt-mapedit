@@ -6,6 +6,7 @@ $(document).ready(function() {
     
     document.onkeydown = function(e) {
         switch(e.key) {
+            case 'a': $('.aim').addClass('setFloor'); break
             case 'd': $('.aim').addClass('delete'); break
             case 's': $('.aim > img').addClass('mirro'); break
         }
@@ -13,6 +14,7 @@ $(document).ready(function() {
     
     document.onkeyup = function(e) {
         switch(e.key) {
+            case 'a': $('.aim').removeClass('setFloor'); break
             case 'd': $('.aim').removeClass('delete'); break
             case 's': $('.aim > img').removeClass('mirro'); break
         }
@@ -21,9 +23,19 @@ $(document).ready(function() {
     document.addEventListener('click', function(e) {
         if($('.aim').is('.delete')) { 
             e.stopPropagation()
-            if($(e.target).is('.item, .icon')) {
+            if($(e.target).is('.item')) {
                 $(e.target).remove()
             }
+            if($(e.target).is('.icon')) {
+                $(e.target).remove()
+                if($('.aim > img').attr('title') == e.target.title) {
+                    $('.aim > img').replaceWith($('<img>'))
+                }
+            }
+        }
+        if($('.aim').is('.setFloor')) {
+            e.stopPropagation()
+            $(e.target).toggleClass('floor')
         }
     }, true)
 
@@ -40,7 +52,13 @@ $(document).ready(function() {
     })
 
     $('.map-container').click(function(e) {
-        $('.map').append($('.aim > .item').clone().css(calcLocate(e)))
+        if(!$('.aim > img').is('.item')) {
+            return
+        }
+        var img = $('.icon.selected').clone().removeClass('icon').addClass($('.aim > img').attr('class')).css(calcLocate(e)).appendTo($('.map'))
+        var x = parseInt((img.position().left + img.width() / 2) / uw)
+        var y = parseInt((img.position().top + img.height() - img.width() / 4) / uh)
+        img.css('z-index', img.is('.floor') ? '0' : (y - x + 150) * 10 + y)
     })
 
     $('.tool-container').click(function(e) {
@@ -48,7 +66,7 @@ $(document).ready(function() {
             if($(e.target).is('.selected')) {
                 $('.aim > img').replaceWith($('<img>'))
             } else {
-                $('.aim > img').replaceWith($(e.target).clone().attr({class: 'item'}))
+                $('.aim > img').replaceWith($(e.target).clone().removeClass('icon').addClass('item'))
                 $('.icon.selected').removeClass('selected')
             }
             $(e.target).toggleClass('selected')

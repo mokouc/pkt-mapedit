@@ -46,7 +46,7 @@ img.mirro {
 .aim {
     position: absolute;
     pointer-events: none;
-    z-index: 2;
+    z-index: 5000;
     opacity: 60%;
 }
 
@@ -81,6 +81,10 @@ img.mirro {
     padding: 0.5vh;
     width: 6vh; height: 6vh;
     z-index: 0;
+}
+
+.icon.floor {
+    background-color: rgba(165, 42, 42, 0.397);
 }
 
 .upload {
