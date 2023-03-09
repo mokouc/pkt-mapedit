@@ -58,7 +58,7 @@ $(document).ready(function() {
         var img = $('.icon.selected').clone().removeClass('icon').addClass($('.aim > img').attr('class')).css(calcLocate(e)).appendTo($('.map'))
         var x = parseInt((img.position().left + img.width() / 2) / uw)
         var y = parseInt((img.position().top + img.height() - img.width() / 4) / uh)
-        img.css('z-index', img.is('.floor') ? '0' : (y - x + 150) * 10 + y)
+        img.css('z-index', img.is('.floor') ? '0' : (y - x + 150) * 5 + y)
     })
 
     $('.tool-container').click(function(e) {
