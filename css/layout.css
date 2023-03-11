@@ -41,6 +41,15 @@ img.mirro {
     /* width: 1228px; height: 691px; */
     width: calc(1535px / 1.5); height: calc(864px / 1.5);  
     overflow: hidden;
+
+    /* 背景网格 */
+    background-size: 20px 10px;
+    background-image: 
+    linear-gradient(26.45deg, #ddd 25%, transparent 0),
+    linear-gradient(-26.45deg, #ddd 25%, transparent 0),
+    linear-gradient(26.45deg, #bbbbbb77 75%, transparent 0),
+    linear-gradient(-26.45deg, #bbbbbb77 75%, transparent 0);
+
 }
 
 .aim {
@@ -56,6 +65,7 @@ img.mirro {
 
 .item {
     position: absolute;
+    /* background-color: red; */
 }
 
 .tool-container {

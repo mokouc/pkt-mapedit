@@ -1,14 +1,15 @@
 
-var uw = 20 / 2
-var uh = 10 / 2
+var uw = 20
+var uh = 10
 
 $(document).ready(function() {
-    
+
     document.onkeydown = function(e) {
         switch(e.key) {
+            case 'p': $('.aim').height($('.aim').height() + 1); break
             case 'a': $('.aim').addClass('setFloor'); break
             case 'd': $('.aim').addClass('delete'); break
-            case 's': $('.aim > img').addClass('mirro'); break
+            case 's': $('.aim').addClass('mirro'); break
         }
     }
     
@@ -16,23 +17,21 @@ $(document).ready(function() {
         switch(e.key) {
             case 'a': $('.aim').removeClass('setFloor'); break
             case 'd': $('.aim').removeClass('delete'); break
-            case 's': $('.aim > img').removeClass('mirro'); break
+            case 's': $('.aim').removeClass('mirro'); break
         }
     }
     
     document.addEventListener('click', function(e) {
         if($('.aim').is('.delete')) { 
             e.stopPropagation()
-            if($(e.target).is('.item')) {
+            if($(e.target).is('.item, .icon')) {
                 $(e.target).remove()
-            }
-            if($(e.target).is('.icon')) {
-                $(e.target).remove()
-                if($('.aim > img').attr('title') == e.target.title) {
-                    $('.aim > img').replaceWith($('<img>'))
+                if($(e.target).is('.icon.selected')) {
+                    $('.aim').replaceWith($('<img class="aim item" id="aim">'))
                 }
             }
         }
+
         if($('.aim').is('.setFloor')) {
             e.stopPropagation()
             $(e.target).toggleClass('floor')
@@ -48,35 +47,37 @@ $(document).ready(function() {
     })
 
     $('.map-container').mousemove(function(e) {
-        $('.aim').css(calcLocate(e))
+        drawImgOnMap($('.aim'), getLocation(e.pageX, e.pageY))
     })
 
     $('.map-container').click(function(e) {
-        if(!$('.aim > img').is('.item')) {
-            return
-        }
-        var img = $('.icon.selected').clone().removeClass('icon').addClass($('.aim > img').attr('class')).css(calcLocate(e)).appendTo($('.map'))
-        var x = parseInt((img.position().left + img.width() / 2) / uw)
-        var y = parseInt((img.position().top + img.height() - img.width() / 4) / uh)
-        img.css('z-index', img.is('.floor') ? '0' : (y - x + 150) * 5 + y)
+
+        var positon = getLocation(e.pageX, e.pageY)
+        var index = (positon.y + 150) * 50 + positon.x
+        var item = $('.icon.selected').clone().addClass($('.aim').attr('class')).removeClass('icon aim').css('z-index', index)
+
+        var l = 8
+        var w = 4
+
+        area(
+            {x: positon.x - l / 2, y: positon.y - w / 2},
+            {x: positon.x + l / 2, y: positon.y + w / 2}
+        )
+        drawImgOnMap(item, positon)
     })
 
     $('.tool-container').click(function(e) {
         if($(e.target).is('.icon')) {
             if($(e.target).is('.selected')) {
-                $('.aim > img').replaceWith($('<img>'))
+                $('.aim').attr('src', '')
             } else {
-                $('.aim > img').replaceWith($(e.target).clone().removeClass('icon').addClass('item'))
+                $('.aim').attr('src', $(e.target).attr('src'))
                 $('.icon.selected').removeClass('selected')
             }
             $(e.target).toggleClass('selected')
             return
         }
         $('.upload').click()
-    })
-
-    $('.item').click(function() {
-        console.log('haha')
     })
 
     $('.upload').change(function(e) {
@@ -92,10 +93,39 @@ $(document).ready(function() {
     })
 })
 
-function calcLocate(e) {
-    // var tmp = parseInt((e.pageX % uw + e.pageY % uh * 2) / 20) * 0
+function getLocation(px, py) {
+    var x = (px - $('.map').offset().left) / uw
+    var y = (py - $('.map').offset().top) / uh
     return {
-        left: parseInt((e.pageX - $('.map').offset().left) / uw) * uw - ($('.aim > img').width() - uw / 2) / 2,
-        top: parseInt((e.pageY - $('.map').offset().top) / uh) * uh - ($('.aim > img').height() - uh / 2) / 2,
+        x: Math.round(y + x),
+        y: Math.round(y - x),
     }
+}
+
+function drawImgOnMap(item, positon) {
+    $('.map').append(item.css({
+        left: (positon.x - positon.y) * uw / 2 - (item[0].width / 2),
+        // top: (positon.x + positon.y) * uh / 2 - (item[0].height / 2),
+        top: (positon.x + positon.y) * uh / 2 - (item[0].height) + (item[0].width / 4),
+        // top: (positon.x + positon.y) * uh / 2 - item[0].height + uh / 2,
+    }))
+}
+
+function sout(data) {
+    console.log(data)
+    return data
+}
+
+function area(positon1, positon2){
+    $('.item.debug').remove()
+    for(let i = positon1.x; i < positon2.x; i++) {
+        for(let j = positon1.y; j < positon2.y; j++) {
+            p({x: i, y: j})
+        }
+    }
+}
+
+function p(positon){
+    var img = $('<img class="item debug" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAALCAYAAAB7/H1+AAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAD5JREFUeJxjYCAS/NfUbABhYtUTbSA6prqBZFtArIFEW0CugTgtoJaBNLeAfmFMrgVEG0isBWQbiMsCYtUDADFr3ZvN0vaSAAAAAElFTkSuQmCC">')
+    drawImgOnMap(img, {x: positon.x, y: positon.y})
 }
