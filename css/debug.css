@@ -1,0 +1,27 @@
+
+.map {
+    /* 背景网格 */
+    background-size: 20px 10px;
+    background-image: 
+        linear-gradient(26.45deg, #ddd 25%, transparent 0),
+        linear-gradient(-26.45deg, #ddd 25%, transparent 0),
+        linear-gradient(26.45deg, #bbbbbb77 75%, transparent 0),
+        linear-gradient(-26.45deg, #bbbbbb77 75%, transparent 0);
+}
+
+.aim {
+    background-color: rgba(255, 0, 0, 0.482);
+}
+
+.item {
+    background-color: rgba(0, 191, 255, 0.236);
+}
+
+.item > img {
+    background-color: rgba(0, 255, 98, 0.236);
+}
+
+.tool-container > .icon {
+    background-color: rgba(255, 179, 0, 0.482);
+}
+

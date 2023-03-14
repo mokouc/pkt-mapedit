@@ -6,7 +6,7 @@
 .map {
     border-radius: 1.5vh;
     box-sizing: border-box;
-    /* border: 0.5vh solid rgb(255, 179, 49); */
+    border: 0.5vh solid rgb(255, 179, 49);
     background-color: rgb(255, 255, 255);
 }
 
@@ -16,11 +16,11 @@
     background-color: rgb(0, 0, 0, 0.3);
 }
 
-.icon {
+.tool-container > .icon {
     border-radius: 1vh;
     border: 0.4vh solid rgb(255, 179, 49);
 }
 
-.icon.selected {
+.tool-container > .icon.selected {
     border: 0.4vh solid rgb(255, 111, 0);
 }
